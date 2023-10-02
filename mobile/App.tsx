@@ -23,7 +23,11 @@ export default function App() {
     return null;
   }
 
-  return (
+  /* return (
     !user ? <Login setUser={setUser} /> : <Routes />
+  ); */
+
+  return (
+    <Routes />
   );
 }
