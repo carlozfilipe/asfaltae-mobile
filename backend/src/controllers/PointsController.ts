@@ -27,6 +27,20 @@ export default {
     return response.json(pointsView.render(point));
   },
 
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+    const pointsRepository = getRepository(Point);
+
+    try {
+      const point = await pointsRepository.findOneOrFail(id);
+      await pointsRepository.remove(point);
+
+      return response.json({ message: 'Ponto excluído com sucesso!' });
+    } catch (error) {
+      return response.status(404).json({ error: 'Ponto não encontrado' });
+    }
+  },
+
   async create(request: Request, response: Response) {
 
     const {
@@ -36,8 +50,6 @@ export default {
       longitude,
     } = request.body;
 
-    console.log(" >>> received request: ", name, about, latitude, longitude);
-    
     const pointsRepository = getRepository(Point);
     const requestImages = request.files as Express.Multer.File[];
 

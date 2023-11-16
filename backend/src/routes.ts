@@ -10,5 +10,6 @@ const upload = multer(uploadConfig);
 routes.get('/points', PointsController.index);
 routes.get('/points/:id', PointsController.show);
 routes.post('/points', upload.array('images'), PointsController.create);
+routes.delete('/points/:id', PointsController.delete);
 
 export default routes;
