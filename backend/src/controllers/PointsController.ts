@@ -35,6 +35,8 @@ export default {
       latitude,
       longitude,
     } = request.body;
+
+    console.log(" >>> received request: ", name, about, latitude, longitude);
     
     const pointsRepository = getRepository(Point);
     const requestImages = request.files as Express.Multer.File[];

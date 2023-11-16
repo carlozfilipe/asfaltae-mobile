@@ -3,7 +3,8 @@ import { Image, ScrollView, View, StyleSheet, Text, TextInput, TouchableOpacity 
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import api from '../../services/api';
+
+import { sendXmlHttpRequest } from '../../services/sendMultipartForm';
 
 interface PointDataRouteParams {
   position: {
@@ -40,7 +41,15 @@ export default function PointData() {
       } as any)
     });
 
-    await api.post('points', data);
+    // await api.post('points', data);
+
+    try {
+      const response = await sendXmlHttpRequest(data);
+      console.log(" >>>> response", response);
+    } catch (err) {
+      // tratar adequadamente o erro para mostrar uma mensagem de erro
+      console.log(err);
+    }
 
     navigation.navigate('PointsMap');
 
