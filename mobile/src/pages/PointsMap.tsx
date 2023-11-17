@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import mapMarker from '../images/cone.png';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -57,15 +57,8 @@ export default function PointsMap() {
                 latitude: point.latitude,
                 longitude: point.longitude,
               }}
+              onPress={() => handleNavigateToPointDetails(point.id)}
             >
-              <Callout
-                tooltip
-                onPress={() => handleNavigateToPointDetails(point.id)}
-              >
-                <View style={styles.calloutContainer}>
-                  <Text style={styles.calloutText}>{point.name}</Text>
-                </View>
-              </Callout>
             </Marker>
           )
         })
@@ -102,21 +95,6 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-  },
-
-  calloutContainer: {
-    width: 160,
-    height: 46,
-    paddingHorizontal: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 16,
-    justifyContent: 'center',
-  },
-
-  calloutText: {
-    fontFamily: 'Nunito_700Bold',
-    color: '#0089a5',
-    fontSize: 16,
   },
 
   footer: {

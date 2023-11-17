@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Image, ScrollView, View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
@@ -10,11 +18,10 @@ interface PointDataRouteParams {
   position: {
     latitude: number;
     longitude: number;
-  }
+  };
 }
 
 export default function PointData() {
-
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
   const [images, setImages] = useState<string[]>([]);
@@ -38,21 +45,17 @@ export default function PointData() {
         name: `image_${index}.jpg`,
         type: 'image/jpg',
         uri: image,
-      } as any)
+      } as any);
     });
-
-    // await api.post('points', data);
 
     try {
       const response = await sendXmlHttpRequest(data);
-      console.log(" >>>> response", response);
+      alert('Ponto cadastrado com sucesso!');
     } catch (err) {
-      // tratar adequadamente o erro para mostrar uma mensagem de erro
-      console.log(err);
+      alert('Erro ao cadastrar ponto!');
     }
 
     navigation.navigate('PointsMap');
-
   }
 
   async function handleSelectImages() {
@@ -64,7 +67,7 @@ export default function PointData() {
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
+      allowsEditing: false,
       quality: 1,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
     });
@@ -78,24 +81,26 @@ export default function PointData() {
     const { uri: image } = result.assets[0];
 
     setImages([...images, image]);
-
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ padding: 24 }}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ padding: 24 }}
+    >
       <Text style={styles.title}>Dados</Text>
 
       <Text style={styles.label}>Fotos</Text>
 
       <View style={styles.uploadedImagesContainer}>
-        {images.map(image => {
+        {images.map((image) => {
           return (
             <Image
               key={image}
               source={{ uri: image }}
               style={styles.uploadedImage}
             />
-          )
+          );
         })}
       </View>
 
@@ -104,11 +109,7 @@ export default function PointData() {
       </TouchableOpacity>
 
       <Text style={styles.label}>Nome do ponto</Text>
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={setName}
-      />
+      <TextInput style={styles.input} value={name} onChangeText={setName} />
 
       <Text style={styles.label}>Sobre</Text>
       <TextInput
@@ -122,7 +123,7 @@ export default function PointData() {
         <Text style={styles.nextButtonText}>Cadastrar</Text>
       </TouchableOpacity>
     </ScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     paddingBottom: 24,
     borderBottomWidth: 0.8,
-    borderBottomColor: '#D3E2E6'
+    borderBottomColor: '#D3E2E6',
   },
 
   label: {
@@ -207,5 +208,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_800ExtraBold',
     fontSize: 16,
     color: '#FFF',
-  }
-})
+  },
+});

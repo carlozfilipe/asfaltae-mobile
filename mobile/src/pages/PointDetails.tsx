@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, ScrollView, Text, StyleSheet, Dimensions, TouchableOpacity, Linking } from 'react-native';
+import {
+  Image,
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import mapMarkerImg from '../images/cone.png';
 import api from '../services/api';
@@ -23,16 +32,15 @@ interface Point {
 }
 
 export default function PointDetails() {
-
   const route = useRoute();
   const [point, setPoint] = useState<Point>();
-
+  const navigation = useNavigation();
   const params = route.params as PointDetailsRouteParams;
 
   useEffect(() => {
-    api.get(`points/${params.id}`).then(response => {
+    api.get(`points/${params.id}`).then((response) => {
       setPoint(response.data);
-    })
+    });
   }, [params.id]);
 
   if (!point) {
@@ -40,30 +48,41 @@ export default function PointDetails() {
       <View style={styles.container}>
         <Text style={styles.description}>Carregando...</Text>
       </View>
-    )
+    );
   }
 
   function handleOpenGoogleMapRoutes() {
-    Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${point?.latitude},${point?.longitude}`)
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&destination=${point?.latitude},${point?.longitude}`
+    );
+  }
+
+  async function handleDeletePoint() {
+    try {
+      await api.delete(`points/${params.id}`);
+      navigation.navigate('PointsMap');
+    } catch (error) {
+      console.error('Erro ao excluir ponto:', error);
+    }
   }
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imagesContainer}>
         <ScrollView horizontal pagingEnabled>
-          {point.images.map(image => {
+          {point.images.map((image) => {
             return (
               <Image
                 key={image.id}
                 style={styles.image}
-                source={{ uri: image.url }} />
-            )
+                source={{ uri: image.url }}
+              />
+            );
           })}
         </ScrollView>
       </View>
 
       <View style={styles.detailsContainer}>
-
         <Text style={styles.title}>{point.name}</Text>
 
         <Text style={styles.description}>{point.about}</Text>
@@ -91,14 +110,23 @@ export default function PointDetails() {
             />
           </MapView>
 
-          <TouchableOpacity style={styles.routesContainer} onPress={handleOpenGoogleMapRoutes}>
+          <TouchableOpacity
+            style={styles.routesContainer}
+            onPress={handleOpenGoogleMapRoutes}
+          >
             <Text style={styles.routesText}>Ver rotas no Google Maps</Text>
           </TouchableOpacity>
         </View>
 
+        <TouchableOpacity
+          style={styles.deletePoint}
+          onPress={handleDeletePoint}
+        >
+          <Text style={styles.deletePointText}>Deletar ponto</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -155,6 +183,20 @@ const styles = StyleSheet.create({
 
   routesText: {
     fontFamily: 'Nunito_700Bold',
-    color: '#0089a5'
+    color: '#0089a5',
+  },
+
+  deletePoint: {
+    backgroundColor: '#4D6F80',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 24,
+  },
+  
+  deletePointText: {
+    color: '#f9f9f9',
+    fontSize: 16,
+    fontWeight: '500',
   }
-})
+});
