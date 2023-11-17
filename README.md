@@ -19,7 +19,7 @@
 <br>
 
 <p align="center">
-  <img alt="AsfaltaÊ" src="./mobile/assets/road.png" width="10%">
+  <img alt="AsfaltaÊ" src="./mobile/assets/road-roller.png" width="10%">
 </p>
 
 ## ✨ Tecnologias
