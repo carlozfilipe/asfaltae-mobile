@@ -19,7 +19,7 @@
 <br>
 
 <p align="center">
-  <img alt="AsfaltaÊ" src="./mobile/assets/road-roller.png" width="10%">
+  <img alt="AsfaltaÊ" src="./mobile/assets/road.png" width="100%">
 </p>
 
 ## ✨ Tecnologias
@@ -34,7 +34,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Projeto
 
-O Points App é um app que registra ruas esburacadas nas vias urbanas de forma simples e objetiva.
+O AsfaltaÊ é um app que registra ruas esburacadas nas vias urbanas de forma simples e objetiva.
 
 ## 🔖 Layout
 
