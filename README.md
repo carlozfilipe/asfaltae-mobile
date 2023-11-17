@@ -18,10 +18,6 @@
 
 <br>
 
-<p align="center">
-  <img alt="AsfaltaÊ" src="./mobile/assets/road.png" width="50%">
-</p>
-
 ## ✨ Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
