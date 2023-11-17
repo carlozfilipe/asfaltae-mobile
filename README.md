@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="AsfaltaÊ" title="AsfaltaÊ" src=".github/logo.jpg" width="300px" />
+  <img alt="AsfaltaÊ" title="AsfaltaÊ" src="./.github/logo.jpg" width="300px" />
 </h1>
 
 <p align="center">
@@ -19,7 +19,7 @@
 <br>
 
 <p align="center">
-  <img alt="AsfaltaÊ" src=".github/road.png" width="10%">
+  <img alt="AsfaltaÊ" src="./.github/road.png" width="10%">
 </p>
 
 ## ✨ Tecnologias
