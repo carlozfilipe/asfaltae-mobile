@@ -1,4 +1,4 @@
-import { ErrorRequestHandler } from "express";
+import { ErrorRequestHandler } from 'express';
 import { ValidationError } from 'yup';
 
 interface ValidationErrors {
