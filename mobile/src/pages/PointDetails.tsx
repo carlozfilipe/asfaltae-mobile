@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
 
   deletePoint: {
-    backgroundColor: '#4D6F80',
+    backgroundColor: '#ff669d',
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
