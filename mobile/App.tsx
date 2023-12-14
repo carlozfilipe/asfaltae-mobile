@@ -7,10 +7,12 @@ import {
 } from '@expo-google-fonts/nunito';
 
 import Routes from './src/routes';
-import Login from './src/pages/Login';
+
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 export default function App() {
-  const [user, setUser] = useState();
 
   const [fontsLoaded] = useFonts({
     Nunito_600SemiBold,
@@ -22,9 +24,7 @@ export default function App() {
     return null;
   }
 
- return !user ? <Login setUser={setUser} /> : <Routes />;
- 
- /* return (
+ return (
     <Routes />
-  );  */
+  ); 
 }

@@ -22,10 +22,10 @@ export default function SelectMapPosition() {
     <View style={styles.container}>
       <MapView
         initialRegion={{
-          latitude: -2.558790, 
-          longitude: -44.307287,
-          latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
+          latitude: -2.5591655, 
+          longitude: -44.3081042,
+          latitudeDelta: 0.0001,
+          longitudeDelta: 0.0001,
         }}
         style={styles.mapStyle}
         onPress={handleSelectMapPosition}

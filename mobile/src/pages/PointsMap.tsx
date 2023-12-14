@@ -37,10 +37,10 @@ export default function PointsMap() {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: -2.5592567,
-          longitude: -44.3095543,
-          latitudeDelta: 0.008,
-          longitudeDelta: 0.008,
+          latitude: -2.5591655,
+          longitude: -44.3081042,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
         }}
       >
 
