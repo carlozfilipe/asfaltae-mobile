@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 
   title: {
     color: '#ffae00',
-    fontSize: 48,
+    fontSize: 56,
     fontFamily: 'RubikMoonrocks_400Regular',
     textAlign: 'center',
   },

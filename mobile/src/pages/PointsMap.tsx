@@ -31,6 +31,13 @@ export default function PointsMap() {
     navigation.navigate('SelectMapPosition');
   }
 
+  // Start - Current Location - Google Maps 
+  
+  
+  
+  
+  // End - Current Location - Google Maps 
+
   return (
     <View style={styles.container}>
       <MapView
@@ -47,6 +54,7 @@ export default function PointsMap() {
         {points.map(point => {
           return (
             <Marker
+              identifier='origin'
               key={point.id}
               icon={mapMarker}
               calloutAnchor={{

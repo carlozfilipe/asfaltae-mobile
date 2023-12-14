@@ -19,20 +19,20 @@ const slides = [
   {
     id: '1',
     image: require('../images/image1.png'),
-    title: 'Cadastre ruas esburacadas',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Torne o mundo um lugar melhor',
+    subtitle: 'O mapa mostrará cada ponto registrado por você.',
   },
   {
     id: '2',
     image: require('../images/image2.png'),
-    title: 'Achieve Your Goals',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Marque no mapa',
+    subtitle: 'Seja você um agente fiscalizador da sua cidade.',
   },
   {
     id: '3',
     image: require('../images/image3.png'),
-    title: 'Increase Your Value',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Compartilhe com outras pessoas',
+    subtitle: 'Ajude outras pessoas de forma voluntária.',
   },
 ];
 
@@ -114,7 +114,7 @@ const OnboardingScreen = ({navigation}) => {
                 style={styles.btn}
                 onPress={() => navigation.replace('Login')}>
                 <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                  GET STARTED
+                  Iniciar
                 </Text>
               </TouchableOpacity>
             </View>
@@ -137,7 +137,7 @@ const OnboardingScreen = ({navigation}) => {
                     fontSize: 15,
                     color: COLORS.white,
                   }}>
-                  SKIP
+                  Pular
                 </Text>
               </TouchableOpacity>
               <View style={{width: 15}} />
@@ -150,7 +150,7 @@ const OnboardingScreen = ({navigation}) => {
                     fontWeight: 'bold',
                     fontSize: 15,
                   }}>
-                  NEXT
+                  Próximo
                 </Text>
               </TouchableOpacity>
             </View>
@@ -179,20 +179,23 @@ const OnboardingScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  subtitle: {
-    color: COLORS.white,
-    fontSize: 13,
-    marginTop: 10,
-    maxWidth: '70%',
-    textAlign: 'center',
-    lineHeight: 23,
-  },
   title: {
     color: COLORS.white,
-    fontSize: 22,
+    opacity: 0.75,
+    fontSize: 28,
     fontWeight: 'bold',
     marginTop: 20,
     textAlign: 'center',
+    maxWidth: '90%',
+  },
+  subtitle: {
+    color: COLORS.white,
+    opacity: 0.7,
+    fontSize: 14,
+    marginTop: 10,
+    maxWidth: '80%',
+    textAlign: 'center',
+    lineHeight: 23,
   },
   image: {
     height: '100%',
