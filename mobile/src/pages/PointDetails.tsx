@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
+import Dialog from 'react-native-dialog';
 
 import mapMarkerImg from '../images/cone.png';
 import api from '../services/api';
@@ -34,6 +36,7 @@ interface Point {
 export default function PointDetails() {
   const route = useRoute();
   const [point, setPoint] = useState<Point>();
+  const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
   const params = route.params as PointDetailsRouteParams;
 
@@ -56,6 +59,14 @@ export default function PointDetails() {
       `https://www.google.com/maps/dir/?api=1&destination=${point?.latitude},${point?.longitude}`
     );
   }
+
+  const showDialog = () => {
+    setVisible(true);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   async function handleDeletePoint() {
     try {
@@ -118,12 +129,21 @@ export default function PointDetails() {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-          style={styles.deletePoint}
-          onPress={handleDeletePoint}
-        >
+        <TouchableOpacity style={styles.deletePoint} onPress={showDialog}>
+          <Feather name="trash-2" size={24} color="#f9f9f9" />
           <Text style={styles.deletePointText}>Deletar ponto</Text>
         </TouchableOpacity>
+
+        <View style={styles.dialog}>
+          <Dialog.Container visible={visible}>
+            <Dialog.Title>Deletar ponto</Dialog.Title>
+            <Dialog.Description>
+              Tem certeza que deseja deletar este ponto?
+            </Dialog.Description>
+            <Dialog.Button label="Não" onPress={handleCancel} />
+            <Dialog.Button label="Sim" onPress={handleDeletePoint} />
+          </Dialog.Container>
+        </View>
       </View>
     </ScrollView>
   );
@@ -132,6 +152,13 @@ export default function PointDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  dialog: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   imagesContainer: {
@@ -187,17 +214,21 @@ const styles = StyleSheet.create({
   },
 
   deletePoint: {
+    flexDirection: 'row',
     backgroundColor: '#ffae00',
     padding: 12,
     borderRadius: 8,
+    textAlign: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 24,
     opacity: 0.8,
   },
-  
+
   deletePointText: {
     color: '#f9f9f9',
     fontSize: 16,
     fontWeight: '500',
-  }
+    marginLeft: 8,
+  },
 });
