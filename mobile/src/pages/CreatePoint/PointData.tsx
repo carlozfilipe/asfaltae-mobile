@@ -162,8 +162,6 @@ export default function PointData() {
     >
       <Text style={styles.title}>Dados</Text>
 
-      <Text style={styles.label}>Abrir sua câmera</Text>
-
       <View style={styles.uploadedImagesContainer}>
         {images.map((image) => {
           return (
@@ -175,7 +173,8 @@ export default function PointData() {
           );
         })}
       </View>
-      
+
+      <Text style={styles.label}>Abrir sua câmera</Text>
 
       <TouchableOpacity style={styles.imagesInput} onPress={handleSelectImages}>
         <Feather name="camera" size={24} color="#b0c7ce" />
@@ -183,7 +182,10 @@ export default function PointData() {
 
       <Text style={styles.label}>Carregar fotos da sua galeria</Text>
 
-      <TouchableOpacity style={styles.imagesInputUpload} onPress={handleSelectImagesUpload}>
+      <TouchableOpacity
+        style={styles.imagesInputUpload}
+        onPress={handleSelectImagesUpload}
+      >
         <Feather name="upload" size={24} color="#b0c7ce" />
       </TouchableOpacity>
 
@@ -198,13 +200,11 @@ export default function PointData() {
         onChangeText={setAbout}
       />
 
-      {currentLocation &&
-      <TouchableOpacity style={styles.nextButton} onPress={handleCreatePoint}>
-        <Text style={styles.nextButtonText}>Cadastrar</Text>
-      </TouchableOpacity>
-      }
-
-
+      {currentLocation && (
+        <TouchableOpacity style={styles.nextButton} onPress={handleCreatePoint}>
+          <Text style={styles.nextButtonText}>Cadastrar</Text>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 }

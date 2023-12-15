@@ -8,7 +8,8 @@ import { RubikMoonrocks_400Regular } from '@expo-google-fonts/rubik-moonrocks';
 import { useNavigation } from '@react-navigation/native';
 
 
-const Login = ({ setUser }) => {
+const SignUp = () => {
+  const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigation = useNavigation();
@@ -35,8 +36,8 @@ const Login = ({ setUser }) => {
     return null;
   }
 
-  function handleNavigateToSignUp() {
-    navigation.navigate('SignUp');
+  function handleNavigateToLogin() {
+    navigation.navigate('Login');
   }
 
   return (
@@ -44,22 +45,33 @@ const Login = ({ setUser }) => {
 
       <View style={styles.imageView}>
         {/* <Image source={roadRoller} style={styles.image} /> */}
-        <Text style={styles.title}>AsfaltaÊ</Text>
-        <Image source={road} style={styles.imageRoad} />
+        <Text style={styles.title}>Cadastro</Text>
+        {/* <Image source={road} style={styles.imageRoad} /> */}
       </View>
 
+      <Text style={styles.label}>Digite seu nome:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nome"
+        placeholderTextColor="#555"
+        value={name}
+        onChangeText={(name) => setName(name)}
+      />
+
+      <Text style={styles.label}>Digite seu e-mail:</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
-        placeholderTextColor="#9da4b0"
+        placeholderTextColor="#555"
         value={email}
         onChangeText={(email) => setEmail(email)}
       />
 
+      <Text style={styles.label}>Crie uma senha:</Text>
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        placeholderTextColor="#9da4b0"
+        placeholderTextColor="#555"
         secureTextEntry={true}
         value={password}
         onChangeText={(password) => setPassword(password)}
@@ -69,14 +81,14 @@ const Login = ({ setUser }) => {
         style={styles.button}
         onPress={handleLogin}
       >
-        <Text style={styles.buttonText}>Fazer Login</Text>
+        <Text style={styles.buttonText}>Criar conta</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.buttonSignUp}
-        onPress={handleNavigateToSignUp}
+        style={styles.buttonLogin}
+        onPress={handleNavigateToLogin}
       >
-        <Text style={styles.buttonTextSignUp}>Não possui conta? Cadastre-se aqui!</Text>
+        <Text style={styles.buttonTextLogin}>Já possui conta? Faça login aqui!</Text>
       </TouchableOpacity>
 
     </View>
@@ -88,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#121015',
     paddingHorizontal: 30,
-    paddingVertical: 70
+    paddingVertical: 30
   },
 
   imageView: {
@@ -97,13 +109,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   image: {
     width: 56,
     height: 56,
-  },
-  imageRoad: {
-    width: 250,
-    height: 50,
   },
 
   title: {
@@ -111,13 +120,20 @@ const styles = StyleSheet.create({
     fontSize: 56,
     fontFamily: 'RubikMoonrocks_400Regular',
     textAlign: 'center',
+    marginBottom: 20,
+  },
+  label: {
+    color: '#ccc',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   input: {
     backgroundColor: '#1f1e25',
     color: '#fff',
     fontSize: 16,
     padding: Platform.OS === 'ios' ? 15 : 10,
-    marginTop: 30,
+    marginTop: 10,
+    marginBottom: 30,
     borderRadius: 8
   },
   button: {
@@ -125,27 +141,31 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 16
   },
   buttonText: {
     color: '#121015',
     fontSize: 16,
     fontWeight: 'bold'
   },
-  buttonSignUp: {
+  imageRoad: {
+    width: 250,
+    height: 50,
+
+  },
+  buttonLogin: {
     backgroundColor: '#121015',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 20
   },
-  buttonTextSignUp: {
+  buttonTextLogin: {
     color: '#ccc',
     fontSize: 16,
     fontWeight: 'normal',
     textDecorationLine: 'underline',
-  },
-
+  }
 });
 
-export default Login;
+export default SignUp;

@@ -134,16 +134,19 @@ export default function PointDetails() {
           <Text style={styles.deletePointText}>Deletar ponto</Text>
         </TouchableOpacity>
 
-        <View style={styles.dialog}>
-          <Dialog.Container visible={visible}>
-            <Dialog.Title>Deletar ponto</Dialog.Title>
-            <Dialog.Description>
-              Tem certeza que deseja deletar este ponto?
-            </Dialog.Description>
-            <Dialog.Button label="Não" onPress={handleCancel} />
-            <Dialog.Button label="Sim" onPress={handleDeletePoint} />
-          </Dialog.Container>
-        </View>
+        <Dialog.Container
+          contentStyle={styles.dialog}
+          footerStyle={styles.dialogFooter}
+          visible={visible}
+        >
+          <Dialog.Title>Deletar ponto</Dialog.Title>
+          <Dialog.Description>
+            Tem certeza que deseja deletar este ponto?
+          </Dialog.Description>
+
+          <Dialog.Button label="Não" onPress={handleCancel} />
+          <Dialog.Button label="Sim" onPress={handleDeletePoint} />
+        </Dialog.Container>
       </View>
     </ScrollView>
   );
@@ -155,10 +158,11 @@ const styles = StyleSheet.create({
   },
 
   dialog: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 18,
+  },
+
+  dialogFooter: {
+    justifyContent: 'space-evenly',
   },
 
   imagesContainer: {

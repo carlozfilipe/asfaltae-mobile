@@ -8,6 +8,7 @@ import PointData from './pages/CreatePoint/PointData';
 import Header from './components/Header';
 import Login from './pages/Login';
 import OnboardingScreen from './pages/OnboardingScreen';
+import SignUp from './pages/SignUp';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -29,6 +30,8 @@ export default function Routes() {
             !user ? <Login setUser={setUser} /> : <PointsMap />
           }
         />
+
+        <Screen name="SignUp" component={SignUp} />
 
         <Screen name="PointsMap" component={PointsMap} />
 

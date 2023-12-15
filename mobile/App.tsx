@@ -13,7 +13,6 @@ import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs();
 
 export default function App() {
-
   const [fontsLoaded] = useFonts({
     Nunito_600SemiBold,
     Nunito_700Bold,
@@ -24,7 +23,5 @@ export default function App() {
     return null;
   }
 
- return (
-    <Routes />
-  ); 
+  return <Routes />;
 }

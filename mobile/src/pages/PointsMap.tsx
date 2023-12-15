@@ -113,7 +113,7 @@ export default function PointsMap() {
 
                 <Marker
                   identifier="origin2"
-                  key={point.id}
+                  key={currentLocation.id}
                   icon={locationMarker}
                   calloutAnchor={{
                     x: 2.7,
@@ -132,7 +132,9 @@ export default function PointsMap() {
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>
-          {points.length} pontos encontrados
+          {points.length === 1 || points.length === 0
+            ? `${points.length} ponto encontrado`
+            : `${points.length} pontos encontrados`}
         </Text>
 
         <TouchableOpacity
