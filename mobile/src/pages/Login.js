@@ -66,6 +66,8 @@ const Login = ({ setUser }) => {
         <Text style={styles.buttonText}>Fazer Login</Text>
       </TouchableOpacity>
 
+      <Text style={styles.buttonSignUp}>Cadastre-se</Text>
+
     </View>
   )
 }
@@ -113,6 +115,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#121015',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  buttonSignUp: {
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold'
   },

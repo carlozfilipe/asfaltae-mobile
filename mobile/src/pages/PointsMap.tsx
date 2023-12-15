@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import mapMarker from '../images/cone.png';
+import locationMarker from '../images/pin.png';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import api from '../services/api';
+import * as Location from 'expo-location';
 
 interface PointItem {
   id: number;
@@ -13,12 +22,20 @@ interface PointItem {
   longitude: number;
 }
 
+/* interface PointItem {
+  latitude: number;
+  longitude: number;
+} */
+
 export default function PointsMap() {
   const navigation = useNavigation();
   const [points, setPoints] = useState<PointItem[]>([]);
+  const [currentLocation, setCurrentLocation] = useState<PointItem | null>(
+    null
+  );
 
   useFocusEffect(() => {
-    api.get('points').then(response => {
+    api.get('points').then((response) => {
       setPoints(response.data);
     });
   });
@@ -31,48 +48,87 @@ export default function PointsMap() {
     navigation.navigate('SelectMapPosition');
   }
 
-  // Start - Current Location - Google Maps 
-  
-  
-  
-  
-  // End - Current Location - Google Maps 
+  // Start - Current Location - Google Maps
+
+  useEffect(() => {
+    let subscription: Location.LocationSubscription;
+
+    Location.requestForegroundPermissionsAsync().then(({ status }) => {
+      if (status !== 'granted') {
+        Alert.alert('Habilite a permissão para obter a localização!');
+        return;
+      }
+
+      Location.watchPositionAsync(
+        {
+          accuracy: Location.LocationAccuracy.High,
+          timeInterval: 1000,
+          distanceInterval: 1,
+        },
+        (location) => {
+          setCurrentLocation(location.coords);
+        }
+      ).then((response) => (subscription = response));
+    });
+
+    return () => {
+      if (subscription) {
+        subscription.remove();
+      }
+    };
+  }, []);
+
+  // End - Current Location - Google Maps
 
   return (
     <View style={styles.container}>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        initialRegion={{
-          latitude: -2.5591655,
-          longitude: -44.3081042,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
-        }}
-      >
+      {currentLocation && (
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          initialRegion={{
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude,
+            latitudeDelta: 0.0001,
+            longitudeDelta: 0.0001,
+          }}
+        >
+          {points.map((point) => {
+            return (
+              <>
+                <Marker
+                  identifier="origin"
+                  key={point.id}
+                  icon={mapMarker}
+                  calloutAnchor={{
+                    x: 2.7,
+                    y: 0.8,
+                  }}
+                  coordinate={{
+                    latitude: point.latitude,
+                    longitude: point.longitude,
+                  }}
+                  onPress={() => handleNavigateToPointDetails(point.id)}
+                ></Marker>
 
-        {points.map(point => {
-          return (
-            <Marker
-              identifier='origin'
-              key={point.id}
-              icon={mapMarker}
-              calloutAnchor={{
-                x: 2.7,
-                y: 0.8,
-              }}
-              coordinate={{
-                latitude: point.latitude,
-                longitude: point.longitude,
-              }}
-              onPress={() => handleNavigateToPointDetails(point.id)}
-            >
-            </Marker>
-          )
-        })
-        }
-
-      </MapView>
+                <Marker
+                  identifier="origin2"
+                  key={point.id}
+                  icon={locationMarker}
+                  calloutAnchor={{
+                    x: 2.7,
+                    y: 0.8,
+                  }}
+                  coordinate={{
+                    latitude: currentLocation.latitude,
+                    longitude: currentLocation.longitude,
+                  }}
+                ></Marker>
+              </>
+            );
+          })}
+        </MapView>
+      )}
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>
@@ -83,14 +139,9 @@ export default function PointsMap() {
           style={styles.createPointButton}
           onPress={handleNavigateToCreatePoint}
         >
-          <Feather
-            name="plus"
-            size={28}
-            color="#fff"
-          />
+          <Feather name="plus" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
-
     </View>
   );
 }
@@ -117,12 +168,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    elevation: 10
+    elevation: 10,
   },
 
   footerText: {
     fontFamily: 'Nunito_700Bold',
-    color: '#8fa7b3'
+    color: '#8fa7b3',
   },
 
   createPointButton: {
@@ -132,5 +183,5 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  }
-})
+  },
+});

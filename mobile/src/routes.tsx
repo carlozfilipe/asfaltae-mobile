@@ -15,29 +15,31 @@ export default function Routes() {
   const [user, setUser] = useState();
   return (
     <NavigationContainer>
-      <Navigator screenOptions={{ headerShown: false, headerStyle: { backgroundColor: '#f2f3f5'}}}>
-
-      <Screen
-          name="OnboardingScreen"
-          component={OnboardingScreen}
-        />
+      <Navigator
+        screenOptions={{
+          headerShown: false,
+          headerStyle: { backgroundColor: '#f2f3f5' },
+        }}
+      >
+        <Screen name="OnboardingScreen" component={OnboardingScreen} />
 
         <Screen
           name="Login"
-          component={() => !user ? <Login setUser={setUser} /> : <PointsMap />}
+          component={() =>
+            !user ? <Login setUser={setUser} /> : <PointsMap />
+          }
         />
 
-        <Screen
-          name="PointsMap"
-          component={PointsMap}
-        />
+        <Screen name="PointsMap" component={PointsMap} />
 
         <Screen
           name="PointDetails"
           component={PointDetails}
           options={{
             headerShown: true,
-            header: () => <Header showCancel={false} title="Ponto cadastrado" />
+            header: () => (
+              <Header showCancel={false} title="Ponto cadastrado" />
+            ),
           }}
         />
 
@@ -46,7 +48,7 @@ export default function Routes() {
           component={SelectMapPosition}
           options={{
             headerShown: true,
-            header: () => <Header title="Selecione no mapa" />
+            header: () => <Header title="Selecione no mapa" />,
           }}
         />
 
@@ -55,10 +57,10 @@ export default function Routes() {
           component={PointData}
           options={{
             headerShown: true,
-            header: () => <Header title="Informe os dados" />
+            header: () => <Header title="Informe os dados" />,
           }}
         />
       </Navigator>
     </NavigationContainer>
-  )
+  );
 }

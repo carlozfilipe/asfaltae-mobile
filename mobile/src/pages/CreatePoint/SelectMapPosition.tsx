@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Alert,
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker, MarkerPressEvent } from 'react-native-maps';
 
-import mapMarkerImg from '../../images/cone.png';
+import locationMarker from '../../images/pin.png';
+
+import * as Location from 'expo-location';
+
+interface PointItem {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+}
 
 export default function SelectMapPosition() {
   const navigation = useNavigation();
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  const [currentLocation, setCurrentLocation] = useState<PointItem | null>(
+    null
+  );
 
   function handleNextStep() {
     navigation.navigate('PointData', { position });
@@ -18,40 +37,78 @@ export default function SelectMapPosition() {
     setPosition(event.nativeEvent.coordinate);
   }
 
+  // Start - Current Location - Google Maps
+
+  useEffect(() => {
+    let subscription: Location.LocationSubscription;
+
+    Location.requestForegroundPermissionsAsync().then(({ status }) => {
+      if (status !== 'granted') {
+        Alert.alert('Habilite a permissão para obter a localização!');
+        return;
+      }
+
+      Location.watchPositionAsync(
+        {
+          accuracy: Location.LocationAccuracy.High,
+          timeInterval: 1000,
+          distanceInterval: 1,
+        },
+        (location) => {
+          setCurrentLocation(location.coords);
+        }
+      ).then((response) => (subscription = response));
+    });
+
+    return () => {
+      if (subscription) {
+        subscription.remove();
+      }
+    };
+  }, []);
+
+  // End - Current Location - Google Maps
+
   return (
     <View style={styles.container}>
-      <MapView
-        initialRegion={{
-          latitude: -2.5591655, 
-          longitude: -44.3081042,
-          latitudeDelta: 0.0001,
-          longitudeDelta: 0.0001,
-        }}
-        style={styles.mapStyle}
-        onPress={handleSelectMapPosition}
-      >
-        {position.latitude !== 0 && (
+      {currentLocation && (
+        <MapView
+          initialRegion={{
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude,
+            latitudeDelta: 0.0001,
+            longitudeDelta: 0.0001,
+          }}
+          style={styles.mapStyle}
+          onPress={handleSelectMapPosition}
+        >
           <Marker
-            icon={mapMarkerImg}
-            coordinate={{ latitude: position.latitude, longitude: position.longitude }}
+            icon={locationMarker}
+            coordinate={{
+              latitude: currentLocation.latitude,
+              longitude: currentLocation.longitude,
+            }}
           />
-        )}
-      </MapView>
+        </MapView>
+      )}
 
-      {position.latitude !== 0 && (
+      {/* {position.latitude !== 0 && (
         <TouchableOpacity style={styles.nextButton} onPress={handleNextStep}>
           <Text style={styles.nextButtonText}>Próximo</Text>
         </TouchableOpacity>
-      )}
+      )} */}
 
+      <TouchableOpacity style={styles.nextButton} onPress={handleNextStep}>
+        <Text style={styles.nextButtonText}>Próximo</Text>
+      </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
   },
 
   mapStyle: {
@@ -76,5 +133,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_800ExtraBold',
     fontSize: 16,
     color: '#FFF',
-  }
-})
+  },
+});
