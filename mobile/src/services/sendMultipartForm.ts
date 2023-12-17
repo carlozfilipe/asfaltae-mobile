@@ -13,8 +13,8 @@ export const sendXmlHttpRequest = (data: FormData) => {
           reject("Request Failed");
         }
       };
-      xhr.open('POST', 'http://172.18.47.27:3333/points');
-      ///xhr.open('POST', 'http://192.168.100.2:3333/points');
+      //xhr.open('POST', 'http://172.18.47.27:3333/points');
+      xhr.open('POST', 'http://192.168.100.2:3333/points');
       xhr.send(data);
     });
 }

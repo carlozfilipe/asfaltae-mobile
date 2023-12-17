@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { auth } from '../services/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import road from '../../assets/road.png';
 import { useFonts } from 'expo-font';
 import { RubikMoonrocks_400Regular } from '@expo-google-fonts/rubik-moonrocks';
 import { useNavigation } from '@react-navigation/native';
-
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState();
@@ -43,7 +42,6 @@ const Login = ({ setUser }) => {
     <View style={styles.container}>
 
       <View style={styles.imageView}>
-        {/* <Image source={roadRoller} style={styles.image} /> */}
         <Text style={styles.title}>AsfaltaÊ</Text>
         <Image source={road} style={styles.imageRoad} />
       </View>
@@ -108,14 +106,14 @@ const styles = StyleSheet.create({
 
   title: {
     color: '#ffae00',
-    fontSize: 56,
+    fontSize: 48,
     fontFamily: 'RubikMoonrocks_400Regular',
     textAlign: 'center',
   },
   input: {
     backgroundColor: '#1f1e25',
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     padding: Platform.OS === 'ios' ? 15 : 10,
     marginTop: 30,
     borderRadius: 8
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
   },
   buttonTextSignUp: {
     color: '#ccc',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'normal',
     textDecorationLine: 'underline',
   },

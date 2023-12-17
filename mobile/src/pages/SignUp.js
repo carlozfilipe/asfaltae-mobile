@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
 import { auth } from '../services/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import road from '../../assets/road.png';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import roadRoller from '../../assets/road-roller.png';
 import { useFonts } from 'expo-font';
 import { RubikMoonrocks_400Regular } from '@expo-google-fonts/rubik-moonrocks';
 import { useNavigation } from '@react-navigation/native';
 
 
 const SignUp = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
-  function handleLogin() {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        setUser(user);
+  function handleCreateAccount() {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        Alert.alert('Cadastro bem-sucedido!', 'Usuário criado com sucesso.');
+        setName('');
+        setEmail('');
+        setPassword('');
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert('Login inválido! Preencha corretamente!')
+      .catch(error => {
+        Alert.alert('Erro ao tentar cadastrar!', error.message);
       });
   }
 
@@ -44,9 +43,8 @@ const SignUp = () => {
     <View style={styles.container}>
 
       <View style={styles.imageView}>
-        {/* <Image source={roadRoller} style={styles.image} /> */}
+        <Image source={roadRoller} style={styles.image} />
         <Text style={styles.title}>Cadastro</Text>
-        {/* <Image source={road} style={styles.imageRoad} /> */}
       </View>
 
       <Text style={styles.label}>Digite seu nome:</Text>
@@ -79,7 +77,7 @@ const SignUp = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={handleLogin}
+        onPress={handleCreateAccount}
       >
         <Text style={styles.buttonText}>Criar conta</Text>
       </TouchableOpacity>
@@ -102,35 +100,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 30
   },
-
   imageView: {
-    marginTop: 80,
+    marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   image: {
     width: 56,
     height: 56,
   },
-
   title: {
     color: '#ffae00',
-    fontSize: 56,
+    fontSize: 48,
     fontFamily: 'RubikMoonrocks_400Regular',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   label: {
     color: '#ccc',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: 'normal',
   },
   input: {
     backgroundColor: '#1f1e25',
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     padding: Platform.OS === 'ios' ? 15 : 10,
     marginTop: 10,
     marginBottom: 30,
@@ -151,7 +146,6 @@ const styles = StyleSheet.create({
   imageRoad: {
     width: 250,
     height: 50,
-
   },
   buttonLogin: {
     backgroundColor: '#121015',
@@ -162,7 +156,7 @@ const styles = StyleSheet.create({
   },
   buttonTextLogin: {
     color: '#ccc',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'normal',
     textDecorationLine: 'underline',
   }
