@@ -18,13 +18,12 @@
 
 <br>
 
-## Demo :arrow_forward:
+## 💻 Projeto
 
-<div align="center">
-<video width="320" height="520" controls>
-  <source src="./TCC/demo.mp4" type="video/mp4">
-</video>
-</div>
+O AsfaltaÊ é um aplicativo para Android e iOS que registra ruas esburacadas nas vias urbanas de forma simples e objetiva.
+
+- Demonstrativo do aplicativo em funcionamento: [Vídeo no YouTube - AsfaltaÊ](https://youtu.be/vKdL6F28ZEY).
+
 ## ✨ Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
@@ -34,10 +33,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [NodeJS](https://nodejs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TypeORM](https://typeorm.io/)
-
-## 💻 Projeto
-
-O AsfaltaÊ é um app que registra ruas esburacadas nas vias urbanas de forma simples e objetiva.
 
 ## 🔖 Layout
 
