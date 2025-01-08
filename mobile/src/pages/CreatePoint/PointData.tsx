@@ -13,21 +13,14 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
-
 import { sendXmlHttpRequest } from '../../services/sendMultipartForm';
+import { PointItem } from '../../types/types';
 
 interface PointDataRouteParams {
   position: {
     latitude: number;
     longitude: number;
   };
-}
-
-interface PointItem {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
 }
 
 export default function PointData() {
@@ -43,7 +36,6 @@ export default function PointData() {
   const params = route.params as PointDataRouteParams;
 
   // Start - Current Location - Google Maps
-
   useEffect(() => {
     let subscription: Location.LocationSubscription;
 
@@ -59,7 +51,7 @@ export default function PointData() {
           timeInterval: 1000,
           distanceInterval: 1,
         },
-        (location) => {
+        (location: any) => {
           setCurrentLocation(location.coords);
         }
       ).then((response) => (subscription = response));
@@ -71,7 +63,6 @@ export default function PointData() {
       }
     };
   }, []);
-
   // End - Current Location - Google Maps
 
   let latitude = currentLocation?.latitude;
@@ -177,7 +168,7 @@ export default function PointData() {
       <Text style={styles.label}>Abrir sua câmera</Text>
 
       <TouchableOpacity style={styles.imagesInput} onPress={handleSelectImages}>
-        <Feather name="camera" size={24} color="#b0c7ce" />
+        <Feather name='camera' size={24} color='#b0c7ce' />
       </TouchableOpacity>
 
       <Text style={styles.label}>Carregar fotos da sua galeria</Text>
@@ -186,7 +177,7 @@ export default function PointData() {
         style={styles.imagesInputUpload}
         onPress={handleSelectImagesUpload}
       >
-        <Feather name="upload" size={24} color="#b0c7ce" />
+        <Feather name='upload' size={24} color='#b0c7ce' />
       </TouchableOpacity>
 
       <Text style={styles.label}>Nome do ponto</Text>
