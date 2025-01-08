@@ -10,20 +10,18 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker, MarkerPressEvent } from 'react-native-maps';
-
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import locationMarker from '../../images/pin.png';
-
 import * as Location from 'expo-location';
+import { RootStackParamList, PointItem } from '../../types/types';
 
-interface PointItem {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-}
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'PointData'
+>;
 
 export default function SelectMapPosition() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [currentLocation, setCurrentLocation] = useState<PointItem | null>(
     null
@@ -38,7 +36,6 @@ export default function SelectMapPosition() {
   }
 
   // Start - Current Location - Google Maps
-
   useEffect(() => {
     let subscription: Location.LocationSubscription;
 
@@ -55,7 +52,13 @@ export default function SelectMapPosition() {
           distanceInterval: 1,
         },
         (location) => {
-          setCurrentLocation(location.coords);
+          const coords = location.coords;
+          setCurrentLocation({
+            id: 'current-location',
+            name: 'Current Location',
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          });
         }
       ).then((response) => (subscription = response));
     });
@@ -66,7 +69,6 @@ export default function SelectMapPosition() {
       }
     };
   }, []);
-
   // End - Current Location - Google Maps
 
   return (
@@ -80,7 +82,7 @@ export default function SelectMapPosition() {
             longitudeDelta: 0.0001,
           }}
           style={styles.mapStyle}
-          onPress={handleSelectMapPosition}
+          onPress={() => handleSelectMapPosition}
         >
           <Marker
             icon={locationMarker}
