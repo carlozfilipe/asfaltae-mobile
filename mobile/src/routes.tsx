@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PointsMap from './pages/PointsMap';
-import PointDetails from './pages/PointDetails';
-import SelectMapPosition from './pages/CreatePoint/SelectMapPosition';
-import PointData from './pages/CreatePoint/PointData';
-import Header from './components/Header';
-import Login from './pages/Login';
-import OnboardingScreen from './pages/OnboardingScreen';
-import SignUp from './pages/SignUp';
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import PointsMap from "./pages/PointsMap";
+import PointDetails from "./pages/PointDetails";
+import SelectMapPosition from "./pages/CreatePoint/SelectMapPosition";
+import PointData from "./pages/CreatePoint/PointData";
+import Header from "./components/Header";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -19,20 +16,9 @@ export default function Routes() {
       <Navigator
         screenOptions={{
           headerShown: false,
-          headerStyle: { backgroundColor: '#f2f3f5' },
+          headerStyle: { backgroundColor: "#f2f3f5" },
         }}
       >
-        <Screen name="OnboardingScreen" component={OnboardingScreen} />
-
-        <Screen
-          name="Login"
-          component={() =>
-            !user ? <Login setUser={setUser} /> : <PointsMap />
-          }
-        />
-
-        <Screen name="SignUp" component={SignUp} />
-
         <Screen name="PointsMap" component={PointsMap} />
 
         <Screen
