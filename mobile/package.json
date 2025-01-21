@@ -20,7 +20,6 @@
     "expo-image-picker": "~14.1.1",
     "expo-location": "~15.1.1",
     "expo-status-bar": "~1.4.4",
-    "firebase": "^10.0.0",
     "react": "18.2.0",
     "react-native": "0.71.14",
     "react-native-dialog": "^9.3.0",
