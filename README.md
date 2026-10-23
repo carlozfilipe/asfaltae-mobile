@@ -28,11 +28,12 @@ O AsfaltaÊ é um aplicativo para Android e iOS que registra ruas esburacadas na
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-- [React Native](https://reactnative.dev/)
-- [Expo](https://expo.dev/)
-- [NodeJS](https://nodejs.org/)
+- [React Native](https://reactnative.dev/) + [Expo](https://expo.dev/) (SDK 58)
+- [React Navigation](https://reactnavigation.org/)
+- [Node.js](https://nodejs.org/) + [Express](https://expressjs.com/)
+- [SQLite](https://sqlite.org/) com [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) (SQL puro)
+- [Zod](https://zod.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [TypeORM](https://typeorm.io/)
 
 ## 🔖 Layout
 
@@ -40,13 +41,23 @@ Você pode visualizar o layout do projeto através [desse link](https://www.figm
 
 ## 🚀 Como executar
 
-- Clone o repositório: `git clone git@github.com:carlozfilipe/asfaltae-mobile.git`
-- Instale as dependências com `yarn` no diretório **backend**.
-- Instale as dependências com `npm i` no diretório **mobile**.
-- Inicie o servidor backend com `yarn dev`
-- Inicie o servidor mobile com `npx expo start`
+Pré-requisitos: Node.js 22+ e Yarn.
 
-Agora você pode acessar utilizando o [Expo](https://expo.dev/) no seu dispositivo real ou emulador.
+- Clone o repositório: `git clone git@github.com:carlozfilipe/asfaltae-mobile.git`
+
+**Backend**
+
+- No diretório **backend**, instale as dependências com `yarn`
+- (Opcional) Copie `.env.example` para `.env` para alterar porta, caminho do banco ou URL pública
+- Inicie o servidor com `yarn dev` (o banco SQLite é criado automaticamente em `data/`)
+
+**Mobile**
+
+- No diretório **mobile**, instale as dependências com `yarn`
+- Copie `.env.example` para `.env` e defina `EXPO_PUBLIC_API_URL` com o IP da sua máquina na rede local (ex.: `http://192.168.0.10:3333`)
+- Inicie o app com `yarn start`
+
+Agora você pode acessar utilizando o [Expo Go](https://expo.dev/go) no seu dispositivo real ou emulador.
 
 ## 📄 Licença
 

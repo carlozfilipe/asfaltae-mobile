@@ -1,14 +1,20 @@
+import { randomUUID } from 'node:crypto';
+import path from 'node:path';
 import multer from 'multer';
-import path from 'path';
 
-export default {
+import { UPLOADS_DIR } from './paths.js';
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+export const upload = multer({
   storage: multer.diskStorage({
-    destination: path.join(__dirname, '..', '..', 'uploads'),
-    filename: (request, file, callback) => {
-      const filename = `${Date.now()}-${file.originalname}`;
-
-      callback(null, filename);
-    }
-  })
-};
-
+    destination: UPLOADS_DIR,
+    filename: (_request, file, callback) => {
+      callback(null, `${Date.now()}-${randomUUID()}${path.extname(file.originalname).toLowerCase()}`);
+    },
+  }),
+  limits: { fileSize: MAX_FILE_SIZE },
+  fileFilter: (_request, file, callback) => {
+    callback(null, file.mimetype.startsWith('image/'));
+  },
+});
