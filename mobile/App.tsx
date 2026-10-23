@@ -1,27 +1,38 @@
-import React, { useState } from 'react';
-import { useFonts } from 'expo-font';
+import { useEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 import {
   Nunito_600SemiBold,
   Nunito_700Bold,
   Nunito_800ExtraBold,
+  useFonts,
 } from '@expo-google-fonts/nunito';
 
-import Routes from './src/routes';
+import { Navigation } from './src/navigation';
 
-import { LogBox } from 'react-native';
-
-LogBox.ignoreAllLogs();
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Nunito_600SemiBold,
     Nunito_700Bold,
     Nunito_800ExtraBold,
   });
 
-  if (!fontsLoaded) {
+  const isReady = fontsLoaded || fontError !== null;
+
+  useEffect(() => {
+    if (isReady) SplashScreen.hideAsync();
+  }, [isReady]);
+
+  if (!isReady) {
     return null;
   }
 
-  return <Routes />;
+  return (
+    <>
+      <StatusBar style="dark" />
+      <Navigation />
+    </>
+  );
 }

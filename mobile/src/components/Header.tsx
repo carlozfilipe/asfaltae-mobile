@@ -1,50 +1,32 @@
-import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useAppNavigation } from '../navigation/useAppNavigation';
+
+import { colors, fonts } from '../theme';
 
 interface HeaderProps {
   title: string;
   showCancel?: boolean;
 }
 
-export default function Header({ title, showCancel = true }: HeaderProps) {
-  const navigation = useNavigation();
-
-  function handleGoBackToAppHomepage() {
-    navigation.navigate('PointsMap');
-  }
+export function Header({ title, showCancel = true }: HeaderProps) {
+  const navigation = useAppNavigation();
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={navigation.goBack}
-      >
-        <Feather
-          name="arrow-left"
-          size={24}
-          color="#ffae00"
-        />
+      <TouchableOpacity onPress={navigation.goBack} accessibilityLabel="Voltar">
+        <Feather name="arrow-left" size={24} color={colors.primary} />
       </TouchableOpacity>
 
       <Text style={styles.title}>{title}</Text>
 
       {showCancel ? (
-        <TouchableOpacity
-          onPress={handleGoBackToAppHomepage}
-        >
-          <Feather
-            name="x"
-            size={24}
-            color="#ff669d"
-          />
+        <TouchableOpacity onPress={() => navigation.popTo('PointsMap')} accessibilityLabel="Cancelar">
+          <Feather name="x" size={24} color={colors.danger} />
         </TouchableOpacity>
       ) : (
-        <View />
-      )
-
-      }
-
+        <View style={styles.placeholder} />
+      )}
     </View>
   );
 }
@@ -52,18 +34,20 @@ export default function Header({ title, showCancel = true }: HeaderProps) {
 const styles = StyleSheet.create({
   container: {
     padding: 24,
-    backgroundColor: '#f9fafc',
+    paddingTop: Platform.OS === 'ios' ? 54 : 24,
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderColor: '#dde3f0',
+    borderColor: colors.headerBorder,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: Platform.OS === 'ios' ? 30 : 0,
   },
-
   title: {
-    fontFamily: 'Nunito_600SemiBold',
-    color: '#8fa7b3',
+    fontFamily: fonts.semiBold,
+    color: colors.muted,
     fontSize: 16,
-  }
+  },
+  placeholder: {
+    width: 24,
+  },
 });

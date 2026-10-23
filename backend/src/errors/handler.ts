@@ -1,24 +1,28 @@
-import { ErrorRequestHandler } from 'express';
-import { ValidationError } from 'yup';
+import type { ErrorRequestHandler } from 'express';
+import { MulterError } from 'multer';
+import { z, ZodError } from 'zod';
 
-interface ValidationErrors {
-  [key: string]: string[];
-}
+import { NotFoundError } from './NotFoundError.js';
 
-const errorHandler: ErrorRequestHandler = (error, request, response, next) => {
-  if (error instanceof ValidationError) {
-    let errors: ValidationErrors = {};
+export const errorHandler: ErrorRequestHandler = (error, _request, response, _next) => {
+  if (error instanceof ZodError) {
+    const errors = z.flattenError(error).fieldErrors;
+    console.warn('Erro de validação:', errors);
 
-    error.inner.forEach(err => {
-      errors[err.path] = err.errors;
-    });
-
-    return response.status(400).json({ message: 'Validation fails', errors })
+    return response.status(400).json({ message: 'Erro de validação', errors });
   }
-  
+
+  if (error instanceof MulterError) {
+    console.warn('Erro no upload:', error.message);
+
+    return response.status(400).json({ message: error.message });
+  }
+
+  if (error instanceof NotFoundError) {
+    return response.status(404).json({ message: error.message });
+  }
+
   console.error(error);
 
-  return response.status(500).json({ message: 'Internal server error' });  
+  return response.status(500).json({ message: 'Internal server error' });
 };
-
-export default errorHandler;
